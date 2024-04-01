@@ -14,9 +14,9 @@ namespace aud_oop
             dataGridView1.Columns[0].Name = "ID";
             dataGridView1.Columns[1].Name = "Задача";
             dataGridView1.Columns[2].Name = "Дата";
-            dataGridView1.Columns[3].Name = "Завершено";
+            dataGridView1.Columns[3].Name = "Завершенность";
             import_file("file.txt");
-            count = dataGridView1.Rows.Count;
+            count = Convert.ToInt32(File.ReadAllText("count.txt"));
         }
         public void add_task()
         {
@@ -65,18 +65,18 @@ namespace aud_oop
         }
         private void go_to_file(string filePath)
         {
-            StringBuilder sb = new StringBuilder();
+            string sb = "";
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 foreach (DataGridViewCell cell in row.Cells)
                 {
-                    sb.Append(cell.Value + "\t");
+                    sb += (cell.Value + "\t");
                 }
-                sb.AppendLine();
+                sb += "\n";
             }
-
-            File.WriteAllText(filePath, sb.ToString());
+            File.WriteAllText("count.txt", count.ToString());
+            File.WriteAllText(filePath, sb);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
